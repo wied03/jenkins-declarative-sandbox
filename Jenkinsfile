@@ -47,6 +47,7 @@ pipeline {
     options {
         preserveStashes()
         buildDiscarder logRotator(numToKeepStr: '2')
+        timestamps()
     }
 
     post {
