@@ -15,10 +15,6 @@ pipeline {
         }
         stage('Second stage') {
             steps {
-                script {
-                    // TODO: How do we get the version number from the restarted stage build back?
-                    currentBuild.description = weAreBuilding
-                }
                 echo "Our build number is ${env.BUILD_NUMBER}"
                 unstash 'the_artifact'
                 sh 'cat the_artifact'
@@ -28,6 +24,6 @@ pipeline {
     }
     options {
         preserveStashes()
-        buildDiscarder logRotator(numToKeepStr: '3')
+        buildDiscarder logRotator(numToKeepStr: '2')
     }
 }
