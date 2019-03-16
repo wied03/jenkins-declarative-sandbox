@@ -22,6 +22,11 @@ pipeline {
                 stash includes: env.VERSION_TRACKER,
                       name: env.VERSION_TRACKER
             }
+            post {
+                always {
+                    cleanWs()
+                }
+            }
         }
         stage('Deploy to DEV') {
             input {
@@ -49,11 +54,5 @@ pipeline {
         preserveStashes()
         buildDiscarder logRotator(numToKeepStr: '2')
         timestamps()
-    }
-
-    post {
-        always {
-            cleanWs disableDeferredWipeout: true
-        }
     }
 }
