@@ -11,7 +11,6 @@ pipeline {
         stage('Build') {
             agent any
             steps {
-                cleanWs()
                 script {
                     currentBuild.description = "1.0.${env.BUILD_NUMBER} for vCores ${env.vCores}"
                 }
@@ -50,5 +49,11 @@ pipeline {
         preserveStashes()
         buildDiscarder logRotator(numToKeepStr: '2')
         timestamps()
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
     }
 }
