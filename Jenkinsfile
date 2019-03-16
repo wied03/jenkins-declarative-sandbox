@@ -16,6 +16,7 @@ pipeline {
                     currentBuild.description = "1.0.${env.BUILD_NUMBER} for vCores ${env.vCores}"
                 }
                 sh 'uname'
+                sh 'cat the_file.txt'
                 echo "Our build number is ${env.BUILD_NUMBER}"
                 writeFile file: env.VERSION_TRACKER,
                           text: env.BUILD_NUMBER
