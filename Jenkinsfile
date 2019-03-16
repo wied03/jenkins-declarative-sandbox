@@ -19,12 +19,10 @@ pipeline {
                 stash env.VERSION_TRACKER
             }
         }
-        stage('OK to deploy to DEV?') {
+        stage('Deploy to DEV') {
             input {
                 message 'Is this OK?'
             }
-        }
-        stage('Deploy to DEV') {
             steps {
                 unstash env.VERSION_TRACKER
                 script {
