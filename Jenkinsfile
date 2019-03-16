@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         VCORES = '0.1'
+        VERSION_TRACKER = 'the_artifact'
     }
 
     stages {
@@ -11,18 +12,17 @@ pipeline {
                 script {
                     currentBuild.description = "1.0.${env.BUILD_NUMBER} for vCores ${env.vCores}"
                 }
-                sh 'rm -rf the_artifact'
                 sh 'uname'
                 echo "Our build number is ${env.BUILD_NUMBER}"
-                sh "echo ${env.BUILD_NUMBER} >> the_artifact"
-                stash 'the_artifact'
+                writeFile(env.VERSION_TRACKER, env.BUILD_NUMBER)
+                stash env.VERSION_TRACKER
             }
         }
         stage('Second stage') {
             steps {
-                unstash 'the_artifact'
+                unstash env.VERSION_TRACKER
                 script {
-                    env.theVersion = readFile('the_artifact')
+                    env.theVersion = readFile(env.VERSION_TRACKER)
                     def isRestart = env.BUILD_NUMBER.toString() != env.theVersion.trim()
                     if (isRestart) {
                         currentBuild.description = "Restarted build for ${env.theVersion}"
