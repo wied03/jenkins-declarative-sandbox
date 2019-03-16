@@ -23,7 +23,7 @@ pipeline {
                 unstash 'the_artifact'
                 script {
                     env.theVersion = readFile('the_artifact')
-                    def isRestart = env.BUILD_NUMBER.toString() != env.theVersion
+                    def isRestart = env.BUILD_NUMBER.toString() != env.theVersion.trim()
                     if (isRestart) {
                         currentBuild.description = "Restarted build for ${env.theVersion}"
                     }
