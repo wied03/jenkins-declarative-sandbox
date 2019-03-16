@@ -14,7 +14,8 @@ pipeline {
                 }
                 sh 'uname'
                 echo "Our build number is ${env.BUILD_NUMBER}"
-                writeFile(env.VERSION_TRACKER, env.BUILD_NUMBER)
+                writeFile file: env.VERSION_TRACKER,
+                          text: env.BUILD_NUMBER
                 stash env.VERSION_TRACKER
             }
         }
