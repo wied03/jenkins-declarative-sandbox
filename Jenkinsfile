@@ -1,11 +1,15 @@
 pipeline {
     agent any
 
+    environment {
+        VCORES = '0.1'
+    }
+
     stages {
         stage('First stage') {
             steps {
                 script {
-                    currentBuild.description = "1.0.${env.BUILD_NUMBER}"
+                    currentBuild.description = "1.0.${env.BUILD_NUMBER} for vCores ${env.vCores}"
                 }
                 sh 'rm -rf the_artifact'
                 sh 'uname'
@@ -16,6 +20,9 @@ pipeline {
         }
         stage('Second stage') {
             steps {
+                script {
+                    currentBuild.description = "1.0.${env.BUILD_NUMBER} for vCores ${env.vCores}"
+                }
                 sh 'cat the_file.txt'
                 echo "Our build number is ${env.BUILD_NUMBER}"
                 unstash 'the_artifact'
