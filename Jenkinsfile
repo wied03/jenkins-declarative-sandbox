@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        VCORES = '0.1'
+        VCORES = '0.2'
     }
 
     stages {
