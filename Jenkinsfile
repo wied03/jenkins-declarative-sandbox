@@ -1,4 +1,5 @@
 pipeline {
+    // have to do none here so that input does not tie up an executor
     agent none
 
     environment {
@@ -24,6 +25,7 @@ pipeline {
             input {
                 message 'Is this OK?'
             }
+            // needs to follow input
             agent any
             steps {
                 unstash env.VERSION_TRACKER
