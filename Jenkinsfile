@@ -5,6 +5,7 @@ pipeline {
     environment {
         VCORES = '0.1'
         VERSION_TRACKER = 'the_artifact'
+        MAJOR_VERSION = '1.0'
     }
 
     stages {
@@ -12,7 +13,8 @@ pipeline {
             agent any
             steps {
                 script {
-                    currentBuild.description = "1.0.${env.BUILD_NUMBER} for vCores ${env.vCores}"
+                    env.BUILD_NUMBER = "${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+                    currentBuild.description = "${env.BUILD_NUMBER} for vCores ${env.vCores}"
                 }
                 sh 'uname'
                 sh 'cat the_file.txt'
@@ -37,11 +39,16 @@ pipeline {
             steps {
                 unstash env.VERSION_TRACKER
                 script {
+                    if (!env.BUILD_NUMBER.contains(env.MAJOR_VERSION)) {
+                        // a restart build
+                        env.BUILD_NUMBER = "${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+                    }
                     env.theVersion = readFile(env.VERSION_TRACKER)
                     def isRestart = env.BUILD_NUMBER.toString() != env.theVersion.trim()
                     if (isRestart) {
                         currentBuild.description = "Restarted build for ${env.theVersion}"
                     }
+                    currentBuild.description = currentBuild.description + ' in DEV'
                 }
                 sh 'cat the_file.txt'
                 echo "Our build number is ${env.theVersion}"
