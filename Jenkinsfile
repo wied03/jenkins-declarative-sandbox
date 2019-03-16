@@ -35,4 +35,10 @@ pipeline {
         preserveStashes()
         buildDiscarder logRotator(numToKeepStr: '2')
     }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
 }
