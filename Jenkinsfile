@@ -18,7 +18,7 @@ pipeline {
                 echo "Our build number is ${env.BUILD_NUMBER}"
                 writeFile file: env.VERSION_TRACKER,
                           text: env.BUILD_NUMBER
-                stash include: env.VERSION_TRACKER,
+                stash includes: env.VERSION_TRACKER,
                       name: env.VERSION_TRACKER
             }
         }
