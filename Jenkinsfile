@@ -35,7 +35,8 @@ pipeline {
             // needs to follow input
             agent any
             steps {
-                milestone label: 'Dev Deployment'
+                milestone label: 'Dev Deployment',
+                          ordinal: 1
                 unstash env.VERSION_TRACKER
                 script {
                     env.theVersion = readFile(env.VERSION_TRACKER)
