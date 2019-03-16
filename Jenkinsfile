@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('First stage') {
+        stage('Build') {
             steps {
                 script {
                     currentBuild.description = "1.0.${env.BUILD_NUMBER} for vCores ${env.vCores}"
@@ -19,7 +19,12 @@ pipeline {
                 stash env.VERSION_TRACKER
             }
         }
-        stage('Second stage') {
+        stage('OK to deploy to DEV?') {
+            input {
+                message 'Is this OK?'
+            }
+        }
+        stage('Deploy to DEV') {
             steps {
                 unstash env.VERSION_TRACKER
                 script {
