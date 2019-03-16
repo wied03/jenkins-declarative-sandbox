@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        VCORES = '0.2'
+        VCORES = '0.1'
     }
 
     stages {
@@ -15,7 +15,7 @@ pipeline {
                 sh 'uname'
                 echo "Our build number is ${env.BUILD_NUMBER}"
                 sh "echo ${env.BUILD_NUMBER} >> the_artifact"
-                stash 'the_artifact'
+                //stash 'the_artifact'
             }
         }
         stage('Second stage') {
@@ -25,7 +25,7 @@ pipeline {
                 }
                 sh 'cat the_file.txt'
                 echo "Our build number is ${env.BUILD_NUMBER}"
-                unstash 'the_artifact'
+                //unstash 'the_artifact'
                 sh 'cat the_artifact'
                 sh 'rm this_will_fail'
             }
