@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
 
     environment {
         VCORES = '0.1'
@@ -8,6 +8,7 @@ pipeline {
 
     stages {
         stage('Build') {
+            agent any
             steps {
                 script {
                     currentBuild.description = "1.0.${env.BUILD_NUMBER} for vCores ${env.vCores}"
@@ -23,6 +24,7 @@ pipeline {
             input {
                 message 'Is this OK?'
             }
+            agent any
             // you have to have steps in a stage, can't do just input
             // don't want input in the deploy stage because it will tie up an executor while waiting
             steps {
@@ -30,6 +32,7 @@ pipeline {
             }
         }
         stage('Deploy to DEV') {
+            agent any
             steps {
                 unstash env.VERSION_TRACKER
                 script {
