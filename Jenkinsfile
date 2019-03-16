@@ -4,8 +4,7 @@ pipeline {
         stage('First stage') {
             steps {
                 script {
-                    weAreBuilding = "1.0.${env.BUILD_NUMBER}"
-                    currentBuild.description = weAreBuilding
+                    currentBuild.description = "1.0.${env.BUILD_NUMBER}"
                 }
                 sh 'rm -rf the_artifact'
                 sh 'uname'
@@ -17,6 +16,7 @@ pipeline {
         stage('Second stage') {
             steps {
                 script {
+                    // TODO: How do we get the version number from the restarted stage build back?
                     currentBuild.description = weAreBuilding
                 }
                 echo "Our build number is ${env.BUILD_NUMBER}"
@@ -28,5 +28,6 @@ pipeline {
     }
     options {
         preserveStashes()
+        buildDiscarder logRotator(numToKeepStr: '3')
     }
 }
