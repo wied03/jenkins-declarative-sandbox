@@ -20,18 +20,10 @@ pipeline {
                 stash env.VERSION_TRACKER
             }
         }
-        stage('OK to deploy to DEV?') {
+        stage('Deploy to DEV') {
             input {
                 message 'Is this OK?'
             }
-            agent any
-            // you have to have steps in a stage, can't do just input
-            // don't want input in the deploy stage because it will tie up an executor while waiting
-            steps {
-                echo 'proceeding'
-            }
-        }
-        stage('Deploy to DEV') {
             agent any
             steps {
                 unstash env.VERSION_TRACKER
