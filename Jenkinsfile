@@ -20,12 +20,13 @@ pipeline {
         }
         stage('Second stage') {
             steps {
+                unstash 'the_artifact'
+                def version = readFile('the_artifact')
                 script {
-                    currentBuild.description = "1.0.${env.BUILD_NUMBER} for vCores ${env.vCores}"
+                    currentBuild.description = "Restarted build for ${version}"
                 }
                 sh 'cat the_file.txt'
                 echo "Our build number is ${env.BUILD_NUMBER}"
-                unstash 'the_artifact'
                 sh 'cat the_artifact'
                 sh 'rm this_will_fail'
             }
