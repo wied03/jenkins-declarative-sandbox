@@ -16,6 +16,7 @@ pipeline {
         }
         stage('Second stage') {
             steps {
+                sh 'cat the_file.txt'
                 echo "Our build number is ${env.BUILD_NUMBER}"
                 unstash 'the_artifact'
                 sh 'cat the_artifact'
