@@ -1,7 +1,6 @@
 pipeline {
     // have to do none here so that input does not tie up an executor
     agent none
-
     environment {
         VCORES = '0.1'
         VERSION_TRACKER = 'the_artifact'
