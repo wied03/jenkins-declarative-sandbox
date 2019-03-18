@@ -16,6 +16,7 @@ pipeline {
                 }
                 sh 'uname'
                 sh 'cat the_file.txt'
+                doStuff(theParameter: "foobar")
                 echo "Our build number is ${env.BUILD_NUMBER}"
                 writeFile file: env.VERSION_TRACKER,
                           text: env.BUILD_NUMBER
